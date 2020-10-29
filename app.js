@@ -18,4 +18,4 @@ app.use(express.static('assets'));
  
 app.use('/assets', express.static(__dirname + '/assets'));
  
-app.listen(8080);
+app.listen(3000);

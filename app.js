@@ -17,5 +17,7 @@ app.get('/detail', function (req, res) {
 app.use(express.static('assets'));
  
 app.use('/assets', express.static(__dirname + '/assets'));
+
+const PORT = process.env.PORT || 5000;
  
-app.listen(3000, ()=> console.log("Server start on port 3000"));
+app.listen(PORT, ()=> console.log("Server start on port 5000"));

@@ -1,3 +1,30 @@
+// SDK de Mercado Pago
+const mercadopago = require('mercadopago');
+
+// Agrega credenciales
+mercadopago.configure({
+    access_token: 'APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181'
+});
+
+// Crea un objeto de preferencia
+let preference = {
+    items: [
+        {
+            title: 'Mi producto',
+            unit_price: 100,
+            quantity: 1,
+        }
+    ]
+};
+
+mercadopago.preferences.create(preference)
+    .then(function (response) {
+        // Este valor reemplazará el string "<%= global.id %>" en tu HTML
+        global.id = response.body.id;
+    }).catch(function (error) {
+        console.log(error);
+    });
+
 var express = require('express');
 var exphbs  = require('express-handlebars');
  
@@ -21,3 +48,5 @@ app.use('/assets', express.static(__dirname + '/assets'));
 const PORT = process.env.PORT || 5000;
  
 app.listen(PORT, ()=> console.log("Server start on port 5000"));
+
+

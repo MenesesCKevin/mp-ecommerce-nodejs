@@ -51,6 +51,7 @@ const hbs = exphbs.create({
                     failure: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/failure",
                     pending: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/pending"
                 },
+                auto_return: "approved",
                 payment_methods: {
                     excluded_payment_methods: [
                         {
@@ -65,6 +66,7 @@ const hbs = exphbs.create({
                     ],
                     installments: 6
                 },
+                notification_url: "https://hookb.in/lJPrBX767eurXXZWdpjR",
                 external_reference: "kevosmar.22@gmail.com"
             };
             //let id = await goToMercadoPago(preference);

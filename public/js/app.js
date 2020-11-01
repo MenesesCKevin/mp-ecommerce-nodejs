@@ -27,3 +27,14 @@ $('#pay').on('click', function(event) {
         alert(error);
     });
 });
+
+$('#home').on('click', function(event) {
+    console.log("entre");
+    event.preventDefault(); // prevent the Browser from refreshing
+    window.location.href ="/"
+});
+$('#home_pending').on('click', function(event) {
+    console.log("entre");
+    event.preventDefault(); // prevent the Browser from refreshing
+    window.location.href ="/"
+});

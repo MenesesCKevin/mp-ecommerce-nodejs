@@ -31,7 +31,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-    res.render('home', { title: 'Tienda e-commerce' });
+    res.render('home');
 });
 
 app.get('/detail', function (req, res) {
@@ -101,7 +101,7 @@ app.post('/pay', function (req, res) {
     mercadopago.preferences.create(preference)
         .then(function (response) {
             // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-            console.log(response.body.init_point);
+            //console.log(response.body.init_point);
             res.json(response.body.init_point);
         }).catch(function (error) {
             res.json(error);

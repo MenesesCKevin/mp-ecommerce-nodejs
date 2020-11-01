@@ -48,10 +48,10 @@
                         <div class="as-producttile-info" style="float:left;min-height: 168px;">
                             <div class="as-producttile-titlepricewraper" style="min-height: 128px;">
                                 <h3>
-                                    Collection id{{ collection_id }}
+                                    Collection id = {{ collection_id }}
                                 </h3>
                                 <h3>
-                                    Status {{collection_status}}
+                                    Status = {{collection_status}}
                                 </h3>
                                 <h3>
                                     Payment id = {{ payment_id }}
@@ -67,7 +67,9 @@
                         </div>
                     </div>
                 </div>
+                <button id="home" type="submit" class="mercadopago-button" formmethod="get">Home</button>
             </div>
         </div>
     </div>
 </div>
+<script src="https://www.mercadopago.com/v2/security.js" view=""></script>

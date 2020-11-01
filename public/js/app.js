@@ -1,5 +1,5 @@
 $('#pay').on('click', function(event) {
-    console.log("entre");
+   // console.log("entre");
     event.preventDefault(); // prevent the Browser from refreshing
     const _title = $('#title').text();
     const _price = parseInt($('#price').text());
@@ -19,8 +19,8 @@ $('#pay').on('click', function(event) {
     })
     .then(function (response) {
         // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-        console.log("pase");
-        console.log(response);
+        //console.log("pase");
+       // console.log(response);
         window.location.href = response;
     }).catch(function (error) {
         console.log(error);
@@ -29,12 +29,12 @@ $('#pay').on('click', function(event) {
 });
 
 $('#home').on('click', function(event) {
-    console.log("entre");
+    //console.log("entre");
     event.preventDefault(); // prevent the Browser from refreshing
     window.location.href ="/"
 });
 $('#home_pending').on('click', function(event) {
-    console.log("entre");
+   // console.log("entre");
     event.preventDefault(); // prevent the Browser from refreshing
     window.location.href ="/"
 });

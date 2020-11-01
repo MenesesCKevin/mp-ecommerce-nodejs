@@ -43,7 +43,7 @@ app.post('/pay', function (req, res) {
     let price= parseInt(req.body.price);
     let unit = parseInt(req.body.unit);
     let imgsrc = "https://menesesckev-mp-commerce-nodejs.herokuapp.com/" + req.body.imgsrc;
-    console.log(imgsrc);
+    //console.log(imgsrc);
 
     let preference = {
         collector_id : 617633181,

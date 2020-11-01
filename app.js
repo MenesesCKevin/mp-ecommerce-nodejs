@@ -1,7 +1,9 @@
 // SDK de Mercado Pago
 const mercadopago = require('mercadopago');
-var express = require('express');
-var exphbs = require('express-handlebars');
+const bodyParser = require("body-parser");
+const express = require('express');
+const exphbs = require('express-handlebars');
+
 
 // Agrega credenciales
 mercadopago.configure({
@@ -9,76 +11,17 @@ mercadopago.configure({
     integrator_id: 'dev_24c65fb163bf11ea96500242ac130004'
 });
 
-var app = express();
+let app = express();
+app.use(express.static(process.cwd() + "/public"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 const hbs = exphbs.create({
     helpers: {
         mercadopago: function (title, price, unit) {
-            console.log("entre")
             // Crea un objeto de preferencia
-            let preference = {
-                collector_id : 617633181,
-                items: [
-                    {
-                        id: "1234",
-                        title: title,
-                        currency_id: "MXN",
-                        picture_url: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/assets/003.jpg",
-                        description: "Dispositivo móvil de Tienda e-commerce",
-                        category_id: "smartphones",
-                        title: title,
-                        unit_price: parseInt(price),
-                        quantity: parseInt(unit),
-                    }
-                ],
-                payer: {
-                    name: "Lalo",
-                    surname: "Landa",
-                    email: "test_user_81131286@testuser.com",
-                    phone: {
-                        area_code: "52",
-                        number: 5549737300
-                    },
-                    address: {
-                        street_name: "Insurgentes Sur",
-                        street_number: 1602,
-                        zip_code: "03940"
-                    }
-                },
-                back_urls: {
-                    success: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/success",
-                    failure: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/failure",
-                    pending: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/pending"
-                },
-                auto_return: "approved",
-                payment_methods: {
-                    excluded_payment_methods: [
-                        {
-                            id: "amex",
-
-                        }
-                    ],
-                    excluded_payment_types: [
-                        {
-                            id: "atm"
-                        }
-                    ],
-                    installments: 6
-                },
-                notification_url: "https://hookb.in/lJPrBX767eurXXZWdpjR",
-                external_reference: "kevosmar.22@gmail.com"
-            };
-            //let id = await goToMercadoPago(preference);
-            mercadopago.preferences.create(preference)
-                .then(function (response) {
-                    // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-                    global.id = response.body.init_point;
-                    console.log(response);
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            console.log(global.id);
+            
             return global.id;
         }
     }
@@ -93,6 +36,76 @@ app.get('/', function (req, res) {
 
 app.get('/detail', function (req, res) {
     res.render('detail', req.query);
+});
+
+app.post('/pay', function (req, res) {
+    let title = req.body.title;
+    let price= parseInt(req.body.price);
+    let unit = parseInt(req.body.unit);
+    let imgsrc = "https://menesesckev-mp-commerce-nodejs.herokuapp.com/" + req.body.imgsrc;
+    console.log(imgsrc);
+
+    let preference = {
+        collector_id : 617633181,
+        items: [
+            {
+                id: "1234",
+                title: title,
+                currency_id: "MXN",
+                picture_url: imgsrc,
+                description: "Dispositivo móvil de Tienda e-commerce",
+                category_id: "smartphones",
+                title: title,
+                unit_price: price,
+                quantity: unit,
+            }
+        ],
+        payer: {
+            name: "Lalo",
+            surname: "Landa",
+            email: "test_user_81131286@testuser.com",
+            phone: {
+                area_code: "52",
+                number: 5549737300
+            },
+            address: {
+                street_name: "Insurgentes Sur",
+                street_number: 1602,
+                zip_code: "03940"
+            }
+        },
+        back_urls: {
+            success: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/success",
+            failure: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/failure",
+            pending: "https://menesesckev-mp-commerce-nodejs.herokuapp.com/pending"
+        },
+        auto_return: "approved",
+        payment_methods: {
+            excluded_payment_methods: [
+                {
+                    id: "amex",
+
+                }
+            ],
+            excluded_payment_types: [
+                {
+                    id: "atm"
+                }
+            ],
+            installments: 6
+        },
+        notification_url: "https://mercadokev.free.beeceptor.com/my/api/path",
+        external_reference: "kevosmar.22@gmail.com"
+    };
+    //let id = await goToMercadoPago(preference);
+    mercadopago.preferences.create(preference)
+        .then(function (response) {
+            // Este valor reemplazará el string "<%= global.id %>" en tu HTML
+            console.log(response.body.init_point);
+            res.json(response.body.init_point);
+        }).catch(function (error) {
+            res.json(error);
+        });
 });
 
 app.get('/success', function (req, res) {
